@@ -1,0 +1,161 @@
+body{
+    background-color: rgb(197, 224, 226);
+} 
+li {
+    list-style-type: none; 
+    margin-top: 2px;
+}
+ul {
+    margin-left: 0; 
+    padding-left: 0;
+}
+input[type="radio"]{
+    display: none;
+}
+input[type="checkbox"]{
+    margin: 12px;
+}
+input[type="radio"].color + label div{
+    display:inline-block;
+    width:19px;
+    height:19px;
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+input[type="radio"]:checked.color + label div{
+    outline: 3px solid rgb(168, 168, 168);
+}
+.div_color1{
+    background:rgb(221, 83, 83);
+}
+.div_color2{
+    background:rgb(221, 83, 198);
+}
+.div_color3{
+    background:rgb(148, 83, 221);
+}
+.div_color4{
+    background:rgb(83, 200, 221);
+}
+.div_color5{
+    background:rgb(83, 221, 152);
+}
+.div_color6{
+    background:rgb(221, 219, 83);
+}
+.shadow{
+     float: left;
+     width: 200px;
+     height: 25px;
+     background-color:none;
+}
+ 
+#divboxsize{
+    float: left;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px 0 0 2px;
+}
+#divtextsize{
+    margin-left: 42px;
+    width: 368px;
+    height: 40px;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 0 2px 2px 0;
+    font-family: Arial;
+}
+a.tooltip span {
+    display: none; 
+    padding: 2px 3px; 
+    margin-left: 8px; 
+    width: 300px;
+}
+a.tooltip:hover span {
+    display: inline; 
+    position: absolute; 
+    background: rgba(255, 255, 255, 0.568); 
+    border: none; 
+    color: rgb(0, 0, 0);
+    border-radius: 2px;
+    word-wrap: break-word;
+}
+.inputfield{
+    width: 410px;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    border: 1px;
+    border-radius: 2px;
+    text-align: center;
+    vertical-align: middle;
+}
+.textfield{
+    margin-top: 5px;
+    border: none;
+    height: 30px;
+}
+.btnfield{
+    background-color:rgb(47, 167, 117);
+    color: white;
+    width: 50px;
+    height: 30px;
+    border-radius: 2px;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(0, 75, 39);
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.delB{
+    float: right;
+    margin-right: 10px;
+    display: none;
+}
+.delBtnDiv{
+    float: right;
+    margin-right: 10px;
+}
+.editB{
+    display: none;
+}
+.hide{
+    display: none;
+}
+.btnfield1{
+    background-color:rgb(47, 167, 63);
+    color: white;
+    width: 30;
+    height: 30px;
+    border-radius: 2px;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(9, 75, 0);
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.btnfield2{
+    background-color:rgb(167, 47, 87);
+    color: white;
+    width: 30;
+    height: 30px;
+    border-radius: 2px;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(75, 0, 16);
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
