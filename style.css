@@ -98,64 +98,38 @@ a.tooltip:hover span {
 }
 .btnfield{
     background-color:rgb(47, 167, 117);
-    color: white;
     width: 50px;
     height: 30px;
-    border-radius: 2px;
-    border-top-style: none;
-    border-left-style: none;
-    border-right-style: none;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
     border-bottom-color: rgb(0, 75, 39);
-    float: right;
-    margin-top: 5px;
-    margin-right: 5px;
-}
-.delB{
-    float: right;
-    margin-right: 10px;
-    display: none;
 }
 .delBtnDiv{
     float: right;
     margin-right: 10px;
-}
-.editB{
-    display: none;
 }
 .hide{
     display: none;
 }
 .btnfield1{
     background-color:rgb(47, 167, 63);
+    border-bottom-color: rgb(9, 75, 0);
+}
+.btnfield2{
+    background-color:rgb(167, 47, 87);
+    border-bottom-color: rgb(75, 0, 16);
+}
+.btnStyle{
     color: white;
-    width: 30;
-    height: 30px;
     border-radius: 2px;
     border-top-style: none;
     border-left-style: none;
     border-right-style: none;
     border-bottom-style: solid;
     border-bottom-width: 1px;
-    border-bottom-color: rgb(9, 75, 0);
     float: right;
     margin-top: 5px;
     margin-right: 5px;
 }
-.btnfield2{
-    background-color:rgb(167, 47, 87);
-    color: white;
+.smallBtnSize{
     width: 30;
     height: 30px;
-    border-radius: 2px;
-    border-top-style: none;
-    border-left-style: none;
-    border-right-style: none;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: rgb(75, 0, 16);
-    float: right;
-    margin-top: 5px;
-    margin-right: 5px;
 }

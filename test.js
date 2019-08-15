@@ -2,12 +2,12 @@ const maxColor = 6;
 const maxTextLenght = 30;
 var nextColor = getRandomInt(0, maxColor);
 
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
     showItems();
 });
 
-function FindColor(){
-    let selectedColor = document.getElementsByName("color");
+function FindColor() {
+    const selectedColor = document.getElementsByName("color");
 
     for(let i = 0; i < selectedColor.length; i++){
         if(selectedColor[i].checked) {
@@ -16,97 +16,72 @@ function FindColor(){
     }    
 }
 function AddItem() {
-    let itemText = document.getElementById("new_item");
+    const itemText = document.getElementById("new_item");
     
     if(itemText.value) {
-        let test =JSON.parse(localStorage.getItem('test'));
-
-        if(!test) {
-            test=[];
-        }
-        let setColor = FindColor();
-        let test1 = {
+        let dbTest = JSON.parse(localStorage.getItem('test'));
+        const setColor = FindColor();
+        const newItem = {
             "title": itemText.value,
             "color": setColor
         }
-        test.push(test1);
-        localStorage.setItem('test', JSON.stringify(test));
 
+        if(!dbTest) {
+            dbTest = [];
+        }
+        dbTest.push(newItem);
+        localStorage.setItem('test', JSON.stringify(dbTest));
         nextColor = getRandomInt(0, maxColor);
         document.getElementsByName("color")[nextColor].checked = true;
-        document.getElementById("new_item").value="";
+        document.getElementById("new_item").value = "";
     }
     showItems();
 }
 function showItems() {
-    let test = JSON.parse(localStorage.getItem('test'));
+    const dbTest = JSON.parse(localStorage.getItem('test'));
 
     while (document.getElementById("itemlist").firstChild) {
         document.getElementById("itemlist").removeChild(document.getElementById("itemlist").firstChild);
     }
 
-    if(test){
-        for(let i = 0;i<test.length;i++){
-            let itemList=document.getElementById("itemlist");
-            let newItem = document.createElement("li");        
-            let newCheck=document.createElement("input");
+    if(dbTest) {
+        const itemList = document.getElementById("itemlist");
+
+        for(let i = 0; i < dbTest.length; i++) {
+            const newItemLi = document.createElement("li");        
+            const newCheck = document.createElement("input");
+            const divCheckbox = document.createElement("div");
+            const divLiText = document.createElement("div");
+
             newCheck.type = "checkbox";
             newCheck.name = "checkB"
-            let divCheckbox=document.createElement("div");
-            divCheckbox.id="divboxsize";
+            
+            divCheckbox.id = "divboxsize";
             divCheckbox.appendChild(newCheck);
-            newItem.appendChild(divCheckbox);
-            let divLiText=document.createElement("div");
-            divLiText.id="divtextsize";
+            newItemLi.appendChild(divCheckbox);
+            divLiText.id = "divtextsize";
 
-            let delBtn = document.createElement("input");
-            delBtn.type = "checkbox";
-            delBtn.className = "delB";
-            delBtn.name = "delBtn";
-            delBtn.id = "delBtn" + i;
-            delBtn.onclick = removeItem;
-            let delBtnLabel = document.createElement("label");
-            delBtnLabel.htmlFor = "delBtn" + i;
-            delBtnLabel.id = "delBtn" + i;
-            let labelDiv = document.createElement("div");
-            labelDiv.className = "delBtnDiv";
-            labelDiv.appendChild(document.createTextNode("X"));
-            delBtnLabel.appendChild(labelDiv)
-            divLiText.appendChild(delBtn);
-            divLiText.appendChild(delBtnLabel);
+            createDeleteBtn(i, divLiText);
+            let editBtnLabelDiv = createEditBtn(i, divLiText);
 
-            let editBtn = document.createElement("input");
-            editBtn.type = "radio";
-            editBtn.className = "editB";
-            editBtn.name = "editBtn";
-            editBtn.id = "editBtn" + i;
-            editBtn.onclick = editItem;
-            let editBtnLabel = document.createElement("label");
-            editBtnLabel.htmlFor = "editBtn" + i;
-            editBtnLabel.id = "editBtn" + i;
-            let editLabelDiv = document.createElement("div");
-            editLabelDiv.className = "editBtnDiv";
-            editBtnLabel.appendChild(editLabelDiv)
-            divLiText.appendChild(editBtn);
-            divLiText.appendChild(editBtnLabel);
-
-            if(test[i].title.length <= maxTextLenght) {
-                editLabelDiv.appendChild(document.createTextNode(" " + test[i].title));
+            if(dbTest[i].title.length <= maxTextLenght) {
+                editBtnLabelDiv.appendChild(document.createTextNode(" " + dbTest[i].title));
             } else {
-                let newA=document.createElement("a");
-                newA.className="tooltip";
-                newA.appendChild(document.createTextNode(" " + test[i].title.slice(0,maxTextLenght) + "..."));
-                let newSpan=document.createElement("span");
-                newSpan.appendChild(document.createTextNode(" " + test[i].title));
+                const newA = document.createElement("a");
+                const newSpan = document.createElement("span");
+
+                newA.className = "tooltip";
+                newA.appendChild(document.createTextNode(" " + dbTest[i].title.slice(0,maxTextLenght) + "..."));
+                newSpan.appendChild(document.createTextNode(" " + dbTest[i].title));
                 newA.appendChild(newSpan);
-                editLabelDiv.appendChild(newA);
+                editBtnLabelDiv.appendChild(newA);
             }
 
-            newItem.appendChild(divLiText);
-            itemList.appendChild(newItem);
-            nextColor = test[i].color;
-            divCheckbox.className="div_color"+nextColor;
-            divLiText.className="div_color"+nextColor;
+            newItemLi.appendChild(divLiText);
+            itemList.appendChild(newItemLi);
+            nextColor = dbTest[i].color;
+            divCheckbox.className = "div_color" + nextColor;
+            divLiText.className = "div_color" + nextColor;
         }
     }
 }
@@ -117,83 +92,120 @@ function getRandomInt(min, max) {
 
 function ChangeColor() {
     let checkedItems = false;
-    let test = JSON.parse(localStorage.getItem('test'));
-    let checkBoxes=document.getElementsByName("checkB");
-    let newColor=FindColor();
-    for(let i=0;i<checkBoxes.length;i++){
-        if(checkBoxes[i].checked){
-            test[i].color = newColor;
+    const dbTest = JSON.parse(localStorage.getItem('test'));
+    const checkBoxes = document.getElementsByName("checkB");
+    const newColor = FindColor();
+
+    for(let i = 0; i < checkBoxes.length; i++) {
+        if(checkBoxes[i].checked) {
+            dbTest[i].color = newColor;
             checkedItems = true;
         }
     }
-    localStorage.setItem('test', JSON.stringify(test));
-    if(checkedItems){
+    localStorage.setItem('test', JSON.stringify(dbTest));
+   
+    if(checkedItems) {
+        const itemText = document.getElementById("new_item");
         checkedItems = false;
-        let itemText = document.getElementById("new_item");
-        itemText.value="";    
+        itemText.value = "";    
         showItems();
     }
 }
 
-function removeItem(){
-    let test = JSON.parse(localStorage.getItem('test'));
-    let delBtns=document.getElementsByName("delBtn");
-    for(let i=0;i<delBtns.length;i++){
-        if(delBtns[i].checked){
+function removeItem() {
+    let dbTest = JSON.parse(localStorage.getItem('test'));
+    const delBtns = document.getElementsByName("delBtn");
+    
+    for(let i = 0; i < delBtns.length; i++) {
+        if(delBtns[i].checked) {
             document.getElementById("itemlist").removeChild(document.getElementById("itemlist").childNodes[i]);
-            test.splice(i,1);
+            dbTest.splice(i,1);
         }
     }
-    localStorage.setItem('test', JSON.stringify(test));
+    localStorage.setItem('test', JSON.stringify(dbTest));
     showItems();
 }
-function editItem(){
-    let test = JSON.parse(localStorage.getItem('test'));
-    let itemText = document.getElementById("new_item");
-    let editBtns = document.getElementsByName("editBtn");
-    for(let i=0;i<editBtns.length;i++){
-        if(editBtns[i].checked){
-            itemText.value = test[i].title;
-            document.getElementsByName("color")[test[i].color-1].checked = true;
+function editItem() {
+    const dbTest = JSON.parse(localStorage.getItem('test'));
+    const itemText = document.getElementById("new_item");
+    const editBtns = document.getElementsByName("editBtn");
+    
+    for(let i = 0;i < editBtns.length; i++) {
+        if(editBtns[i].checked) {
+            itemText.value = dbTest[i].title;
+            document.getElementsByName("color")[dbTest[i].color-1].checked = true;
         }
     }
-    let addbtn = document.getElementById("add_btn");
-    addbtn.className = "hide"
-    let savebtn = document.getElementById("save_btn");
-    savebtn.className = "btnfield1"
-    let cancelbtn = document.getElementById("cancel_btn");
-    cancelbtn.className = "btnfield2"
+    changeActiveBtn("hide", "btnfield1 smallBtnSize btnStyle", "btnfield2 smallBtnSize btnStyle");
 }
-function saveChanges(){
-    let test = JSON.parse(localStorage.getItem('test'));
-    let itemText = document.getElementById("new_item");
-    let editBtns = document.getElementsByName("editBtn");
-    for(let i=0;i<editBtns.length;i++){
-        if(editBtns[i].checked){
-            test[i].title = itemText.value;
+function saveChanges() {
+    const dbTest = JSON.parse(localStorage.getItem('test'));
+    const itemText = document.getElementById("new_item");
+    const editBtns = document.getElementsByName("editBtn");
+    
+    for(let i = 0; i < editBtns.length; i++) {
+        if(editBtns[i].checked) {
+            dbTest[i].title = itemText.value;
             let changeColor = FindColor();
-            test[i].color = changeColor;
+            dbTest[i].color = changeColor;
         }
     }
-    localStorage.setItem('test', JSON.stringify(test));
-    itemText.value="";
-    let addbtn = document.getElementById("add_btn");
-    addbtn.className = "btnfield"
-    let savebtn = document.getElementById("save_btn");
-    savebtn.className = "hide"
-    let cancelbtn = document.getElementById("cancel_btn");
-    cancelbtn.className = "hide"
+    localStorage.setItem('test', JSON.stringify(dbTest));
+    itemText.value = "";
+    changeActiveBtn("btnfield btnStyle", "hide", "hide");
     showItems();
 }
-function removeChanges(){
-    let itemText = document.getElementById("new_item");
-    itemText.value="";
-    let addbtn = document.getElementById("add_btn");
-    addbtn.className = "btnfield"
-    let savebtn = document.getElementById("save_btn");
-    savebtn.className = "hide"
-    let cancelbtn = document.getElementById("cancel_btn");
-    cancelbtn.className = "hide"
-
+function removeChanges() {
+    const itemText = document.getElementById("new_item");
+    
+    itemText.value = "";
+    changeActiveBtn("btnfield btnStyle", "hide", "hide");
     showItems();
+}
+
+function changeActiveBtn(addBtnStyle, saveBtnStyle, cancelBtnStyle) {
+    const addbtn = document.getElementById("add_btn");
+    const savebtn = document.getElementById("save_btn");
+    const cancelbtn = document.getElementById("cancel_btn");
+
+    addbtn.className = addBtnStyle;
+    savebtn.className = saveBtnStyle;
+    cancelbtn.className = cancelBtnStyle;
+}
+
+function createDeleteBtn(btnId, divNode) {
+    const delBtn = document.createElement("input");
+    const delBtnLabel = document.createElement("label");
+    const labelDiv = document.createElement("div");
+
+    delBtn.type = "checkbox";
+    delBtn.className = "delBtnDiv hide";
+    delBtn.name = "delBtn";
+    delBtn.id = "delBtn" + btnId;
+    delBtn.onclick = removeItem;
+    delBtnLabel.htmlFor = "delBtn" + btnId;
+    delBtnLabel.id = "delBtn" + btnId;
+    labelDiv.className = "delBtnDiv";
+    labelDiv.appendChild(document.createTextNode("X"));
+    delBtnLabel.appendChild(labelDiv)
+    divNode.appendChild(delBtn);
+    divNode.appendChild(delBtnLabel);
+}
+function createEditBtn(btnId, divNode) {
+    const editBtn = document.createElement("input");
+    const editBtnLabel = document.createElement("label");
+    const editLabelDiv = document.createElement("div");
+
+    editBtn.type = "radio";
+    editBtn.className = "hide";
+    editBtn.name = "editBtn";
+    editBtn.id = "editBtn" + btnId;
+    editBtn.onclick = editItem;
+    editBtnLabel.htmlFor = "editBtn" + btnId;
+    editBtnLabel.id = "editBtn" + btnId;
+    editLabelDiv.className = "editBtnDiv";
+    editBtnLabel.appendChild(editLabelDiv)
+    divNode.appendChild(editBtn);
+    divNode.appendChild(editBtnLabel);
+    return editLabelDiv;
 }
