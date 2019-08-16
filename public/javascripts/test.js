@@ -2,12 +2,25 @@ const maxColor = 6;
 const maxTextLenght = 30;
 var nextColor = getRandomInt(0, maxColor);
 const baseId = 'josh';
+let todoItems = null;
 
-window.addEventListener('DOMContentLoaded', () => {
-    showItems();
 
-    let ll = getItemsData();
-    console.log("ll " + ll);
+window.addEventListener('DOMContentLoaded', async () => {
+    // await showItems();
+
+    let ll = await getItemsData().then(value => {
+        todoItems = value;
+
+        console.log()
+        showItems(todoItems.body);
+    });
+
+    // ll.then(value => {
+    //     console.log('value', value);
+    // })
+
+    // console.log("ll " + ll);
+    // console.log("ll " + );
 });
 
 function FindColor() {
@@ -46,8 +59,11 @@ function AddItem() {
     }
     showItems();
 }
-function showItems() {
-    const dbTest = JSON.parse(localStorage.getItem('test'));
+function showItems(dbTest) {
+    // const dbTest = JSON.parse(localStorage.getItem('test'));
+
+
+
     //const dbTest = getItemsData();
     //console.log(JSON.stringify(dbTest) +" lenght " + dbTest.length);
    // alert(dbTest);
@@ -220,11 +236,11 @@ function createEditBtn(btnId, divNode) {
     divNode.appendChild(editBtnLabel);
     return editLabelDiv;
 }
-function getItemsData(){
+async function getItemsData(){
     const url = '/';
-    return fetch(url + baseId)
-    .then(response => response.json())
-    
+    const boroda = await fetch(url + baseId).then((response) => response.json())
+    console.log(boroda);
+    return boroda;
 }
 async function createDatabase(){
     const url = "/"

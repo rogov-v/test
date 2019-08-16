@@ -1,9 +1,10 @@
 var ObjectID = require('mongodb').ObjectID;
 
-module.exports=function(app,db){
-  app.get('/:keyName', function (req, res) {
+module.exports = (app,db) => {
+  app.get('/:keyName', (req, res) => {
+    
     const userKey = req.params.keyName;
-    db.findOne({key: userKey} , function (err, item) {
+    db.findOne({key: userKey} , (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
@@ -13,7 +14,7 @@ module.exports=function(app,db){
       } 
     });
   });
-  app.post('/', function (req, res) {
+  app.post('/', (req, res) => {
     const item = {key: req.body.key, body: req.body.body };
     db.insertOne(item, (err, result) => {
       if (err) { 
@@ -24,8 +25,8 @@ module.exports=function(app,db){
     });
   });
   app.put ('/:id', (req, res) => {
-    const id = req.params.id;
-    const details = { '_id': new ObjectID(req.params.id) };
+    const { id } = req.params;
+    const details = { '_id': new ObjectID(id) };
     console.log(details);
 
     const item = {key: req.body.key, body: req.body.body };
